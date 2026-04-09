@@ -12,21 +12,17 @@ pipeline {
             }
         }
 
-    stages {
         stage('test') {
             steps {
                 echo 'Hello test'
             }
         }
 
-
-    stages {
         stage('deploy') {
             steps {
                 echo 'Hello deploy'
             }
         }
-
     }
 
     post {
