@@ -24,7 +24,7 @@ pipeline {
             echo 'Gagal. Seperti ekspektasi awal'
         }
         cleanup {
-            echo "Don't care success or error
+            echo "Don't care success or error"
         }
     }
 }
