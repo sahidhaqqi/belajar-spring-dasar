@@ -1,6 +1,10 @@
 pipeline {
     agent none
 
+    environment {
+        BUILD_TIME = "${new Date().format('yyyy-MM-dd HH:mm:ss')}"
+    }
+
     stages {
         stage("Build") {
             agent {
@@ -9,6 +13,8 @@ pipeline {
                 }
             }
             steps {
+                echo "Job: ${env.JOB_NAME} | Build: ${env.BUILD_NUMBER} | Branch: ${env.BRANCH_NAME} | Time: ${env.BUILD_TIME}"
+
                 script {
                     for (int i = 0; i < 3; i++) {
                         echo "Loop ke-${i}"
@@ -45,10 +51,13 @@ pipeline {
                 }
             }
             steps {
+                echo "Job: ${env.JOB_NAME} | Build: ${env.BUILD_NUMBER} | Branch: ${env.BRANCH_NAME} | Time: ${env.BUILD_TIME}"
+
                 script {
                     def data = [
                         "firstName": "Sahid",
-                        "lastName" : "Haqqi"
+                        "lastName" : "Haqqi",
+                        "buildTime": env.BUILD_TIME
                     ]
 
                     writeJSON file: "data.json", json: data
@@ -69,6 +78,8 @@ pipeline {
                 }
             }
             steps {
+                echo "Job: ${env.JOB_NAME} | Build: ${env.BUILD_NUMBER} | Branch: ${env.BRANCH_NAME} | Time: ${env.BUILD_TIME}"
+
                 echo("Start Deploy")
                 sh "echo Deploying application for Sahid Haqqi..."
                 echo("Finish Deploy")
@@ -78,7 +89,7 @@ pipeline {
 
     post {
         always {
-            echo 'Pipeline selesai (entah sukses atau gagal, hidup tetap jalan)'
+            echo "Job: ${env.JOB_NAME} | Build: ${env.BUILD_NUMBER} | Branch: ${env.BRANCH_NAME} | Time: ${env.BUILD_TIME}"
         }
         success {
             echo 'Mantap, sukses. Langka tapi terjadi'
