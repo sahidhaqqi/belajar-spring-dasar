@@ -1,24 +1,22 @@
 pipeline {
-    agent { 
-        node {
-            label "linux && java11"
-        }
-    }
+    agent none
 
     stages {
         stage("Build") {
+            agent {
+                node {
+                    label "linux && java11"
+                }
+            }
             steps {
                 script {
-                    // loop
                     for (int i = 0; i < 3; i++) {
                         echo "Loop ke-${i}"
                     }
 
-                    // variable
                     def appName = "belajar-spring"
                     echo "App: ${appName}"
 
-                    // kondisi
                     def branch = env.BRANCH_NAME ?: "unknown"
                     if (branch == "main") {
                         echo "Ini branch utama, biasanya penuh tekanan"
@@ -26,7 +24,6 @@ pipeline {
                         echo "Branch ${branch}, santai dulu"
                     }
 
-                    // hasil dari shell
                     def result = sh(
                         script: "echo HelloFromShell",
                         returnStdout: true
@@ -42,6 +39,11 @@ pipeline {
         }
 
         stage("Test") {
+            agent {
+                node {
+                    label "linux && java11"
+                }
+            }
             steps {
                 script {
                     def data = [
@@ -61,6 +63,11 @@ pipeline {
         }
 
         stage("Deploy") {
+            agent {
+                node {
+                    label "linux && java11"
+                }
+            }
             steps {
                 echo("Start Deploy")
                 sh "echo Deploying application for Sahid Haqqi..."
