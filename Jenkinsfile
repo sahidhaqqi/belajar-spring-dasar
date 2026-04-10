@@ -9,16 +9,16 @@ pipeline {
         stage("Build") {
             steps {
                 script {
-                    // contoh 1: loop
+                    // loop
                     for (int i = 0; i < 3; i++) {
                         echo "Loop ke-${i}"
                     }
 
-                    // contoh 2: variable
+                    // variable
                     def appName = "belajar-spring"
                     echo "App: ${appName}"
 
-                    // contoh 3: kondisi
+                    // kondisi
                     def branch = env.BRANCH_NAME ?: "unknown"
                     if (branch == "main") {
                         echo "Ini branch utama, biasanya penuh tekanan"
@@ -26,7 +26,7 @@ pipeline {
                         echo "Branch ${branch}, santai dulu"
                     }
 
-                    // contoh 4: hasil dari shell
+                    // hasil dari shell
                     def result = sh(
                         script: "echo HelloFromShell",
                         returnStdout: true
@@ -43,6 +43,17 @@ pipeline {
 
         stage("Test") {
             steps {
+                script {
+                    def data = [
+                        "firstName": "Sahid",
+                        "lastName" : "Haqqi"
+                    ]
+
+                    writeJSON file: "data.json", json: data
+
+                    echo "JSON untuk Sahid Haqqi berhasil dibuat"
+                }
+
                 echo("Start Test")
                 sh "./mvnw test"
                 echo("Finish Test")
@@ -52,7 +63,7 @@ pipeline {
         stage("Deploy") {
             steps {
                 echo("Start Deploy")
-                sh "echo Deploying application..."
+                sh "echo Deploying application for Sahid Haqqi..."
                 echo("Finish Deploy")
             }
         }
